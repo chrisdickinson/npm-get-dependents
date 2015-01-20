@@ -1,0 +1,32 @@
+{
+  "name": "npm-get-dependents",
+  "version": "1.0.0",
+  "description": "get all dependents of an npm package",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdickinson/npm-get-dependents.git"
+  },
+  "keywords": [
+    "npm",
+    "packages",
+    "dependents"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us> (http://neversaw.us/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisdickinson/npm-get-dependents/issues"
+  },
+  "homepage": "https://github.com/chrisdickinson/npm-get-dependents",
+  "dependencies": {
+    "JSONStream": "^0.10.0",
+    "emit-function": "0.0.2",
+    "once": "^1.3.1"
+  },
+  "devDependencies": {
+    "tape": "^3.4.0"
+  }
+}
