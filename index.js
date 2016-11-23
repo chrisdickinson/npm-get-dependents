@@ -27,6 +27,9 @@ function createReadStream(forPackage, pageSize) {
   var page = 0;
   readable._read = onread;
 
+  var requestInProgress = false;
+  var shouldReadMoreData = false;
+
   return readable;
 
   function getURLForPage(page) {
@@ -46,6 +49,13 @@ function createReadStream(forPackage, pageSize) {
   }
 
   function onread(n) {
+    if (requestInProgress) {
+      shouldReadMoreData = true;
+      return;
+    }
+
+    shouldReadMoreData = false;
+    requestInProgress = true;
     var seen = 0;
     var req = https.request(getURLForPage(page++), function(res) {
       res.on('error', emit(readable, 'error'));
@@ -55,7 +65,9 @@ function createReadStream(forPackage, pageSize) {
           if (item) readable.push(item);
         })
         .on('end', function() {
+          requestInProgress = false;
           if (!seen) readable.push(null);
+          else if (shouldReadMoreData) onread(n);
         });
     });
     req.on('error', emit(readable, 'error'));
